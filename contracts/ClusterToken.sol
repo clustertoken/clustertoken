@@ -225,7 +225,7 @@ contract StandardToken is BasicToken, ERC20 {
 /**
  *  ClusterToken presale contract.
  */
-contract ClusterToken is StandardToken, PullPayment, Ownable {
+contract ClusterToken is StandardToken, PullPayment, Ownable, Pausable {
 	
   using SafeMath for uint;
   
@@ -243,7 +243,7 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
     string public constant name = "ClusterToken";
     string public constant symbol = "CLRT";
     uint256 public constant decimals = 18;
-    uint256 private buyPriceEth = 100000000000000000;
+    uint256 private buyPriceEth = 10000000000000000;
     
     uint256 public initialBlockCount;
     uint256 private testBlockEnd;
@@ -263,9 +263,8 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
      */ 
     function ClusterToken() {
     totalSupply = 750000000000000000000;
-    balances[msg.sender] = totalSupply;                                         // Send all tokens to owner
-    
-    initialBlockCount =  1;                                                     // TESTNET BLOCK!
+    balances[msg.sender] = totalSupply;
+
     contributors = 0;
     }
     
@@ -286,11 +285,9 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
      */ 
     function currentSegment() constant returns (uint256 currentSegment)
     {
-    	uint blockCount = block.number - initialBlockCount;                     // block, FE 1.204.639
-    	
-    	
-    	uint newSegment = currentCluster().mul(1000);                           // N = cluster * 1000 = 1000
-    	uint result = blockCount.div(1000).sub(newSegment);                     // Blocks (1204639) - 1000 =
+    	uint blockCount = block.number - initialBlockCount;
+    	uint newSegment = currentCluster().mul(1000);
+    	uint result = blockCount.div(1000).sub(newSegment);
 
     	return result;
     }
@@ -301,10 +298,10 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
      */ 
     function currentUnit() constant returns (uint256 currentUnit)
     {
-    	uint blockCount = block.number - initialBlockCount;                     // blocks, FE 1.164.864
-    	uint getClusters = currentCluster().mul(1000000);                       // C = clusters(1) * 1000000 = 1000000
-        uint newUnit = currentSegment().mul(1000);                              // N = segments(164) * 1000 = 164000
-    	return blockCount.sub(getClusters).sub(newUnit);                        // blocks (1164864) - C (1000000) - N (4000) = 864       
+    	uint blockCount = block.number - initialBlockCount;
+    	uint getClusters = currentCluster().mul(1000000);
+        uint newUnit = currentSegment().mul(1000);
+    	return blockCount.sub(getClusters).sub(newUnit);      
     	
     }
     
@@ -393,7 +390,6 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
         uint userShares = backers[msg.sender].contribution.div(1 finney);
         uint amountForPayout = buyPriceEth.div(contributors);
         
-        // Divide by 2, rewards get cut in half for withdrawing segments instead of clusters.
         amount =  amountForPayout.mul(userShares).div(10).div(2);                           
         
         balances[msg.sender] += amount;
@@ -419,7 +415,7 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
     /**
      * @dev Allows owner to withdraw funds from the account.
      */ 
-    function withdrawEther() onlyOwner public {
+    function Drain() onlyOwner public {
         if(this.balance > 0) {
             if (!owner.send(this.balance)) throw;
         }
@@ -451,40 +447,6 @@ contract ClusterToken is StandardToken, PullPayment, Ownable {
         return false;
         
     }
-    
-    
-    
-    /**
-     * @dev ================================   TESTCODE ONLY    ================================ *
-     */
-     
-    function testWeiPerSegmentPayout() constant returns (uint coins) {
-        contributors = 100;
-        uint userShares = 10;                    
-        uint amountForPayout = buyPriceEth.div(contributors);
-        return amountForPayout.mul(userShares);
-    }
-    
-    function testEntitledClusters(address _from) public constant returns (uint entitled) {
-        if (!backers[_from].state) throw;
-        uint previousWithdraws = backers[_from].withdrawnAtCluster;
-        uint entitledToClusters = currentCluster().sub(previousWithdraws); 
-        return entitledToClusters;
-        
-    }
-    
-    function testEntitledSegments(address _from) public constant returns (uint entitled) {
-        if (!backers[_from].state) throw;
-        uint previousWithdraws = currentCluster().add(backers[_from].withdrawnAtSegment);           // How many segments did the user requested payouts for?
-        entitled = currentCluster().add(currentSegment().sub(previousWithdraws));                   // Current segments (4) - requester number (0) = 4
-        return entitled;
-        
-    }
-    
-    function testWithdrawAtSegment(address _from) public constant returns (uint entitled) {
-        entitled = backers[_from].withdrawnAtSegment;                
-        return entitled;
-    }
-    
+
 }
     
