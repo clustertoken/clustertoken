@@ -83,3 +83,10 @@ The ClusterTokens will be instantaneously available in your wallet after adding 
 ### 7.	Funds and tokens.
 
 The developers will be allocated 100 ClusterTokens to offer bounties and rewards for marketing, campaigns, and PR related purposes.
+
+
+### 8. Official channels.
+
+All our official channels will be published here below. Do **not** trust any source unlisted here!
+
+## Twitter: https://twitter.com/ClusterToken
