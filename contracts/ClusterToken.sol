@@ -264,6 +264,8 @@ contract ClusterToken is StandardToken, PullPayment, Ownable, Pausable {
     function ClusterToken() {
     totalSupply = 750000000000000000000;
     balances[msg.sender] = totalSupply;
+    
+    initialBlockCount = 4086356;
 
     contributors = 0;
     }
@@ -358,7 +360,6 @@ contract ClusterToken is StandardToken, PullPayment, Ownable, Pausable {
         uint userShares = backers[msg.sender].contribution.div(1 finney);
         uint amountForPayout = buyPriceEth.div(contributors);
         
-        //multiply x1000, 1 cluster = 1000 segments
         amount =  amountForPayout.mul(userShares).mul(1000);                           
         
         balances[msg.sender] += amount;
@@ -447,6 +448,6 @@ contract ClusterToken is StandardToken, PullPayment, Ownable, Pausable {
         return false;
         
     }
-
+    
 }
     
