@@ -89,6 +89,9 @@ The developers will be allocated 100 ClusterTokens to offer bounties and rewards
 
 All our official channels will be published here below. Do **not** trust any source unlisted here!
 
+### Contract address: 0x08fd34559F2ed8585d3810B4D96Ab8A05c9f97c5
+### Token explorer: https://etherscan.io/token/0x08fd34559f2ed8585d3810b4d96ab8a05c9f97c5
+
 
 ### Website: https://www.clustertoken.io 
 ### Mirror website : https://clustertoken.github.io
