@@ -1,4 +1,4 @@
-## Overview of rewards sent to users
+## Overview of rewards sent to users from allocated 100 Clusters
 #### Does not include bugfixes, see docs
 
     TXID: 0x722eb178c05461487b89077df62c11569f4b997e60c13ac9ce0dfcdc8fef21d9
