@@ -56,7 +56,7 @@ Every time one CLUSTER is added to the ClusterToken Smart Contract, holders are 
 
 The rewards can be claimed by any ClusterToken holder by calling the “claimClusters” function of the ClusterToken Smart contract. The rewards will be instantaneously added to your wallet.
 
-ClusterToken has also implemented the possibility of early reward withdrawals. Users can withdraw their rewards every 1 SEGMENT but only **half of the rewards** will be payed to the holders to stimulate claiming only per CLUSTER as intended. To claim the rewards for every SEGMENT, users have to call the function “claimSegments” on the Smart contract interface.
+ClusterToken has also implemented the possibility of early reward withdrawals. Users can withdraw their rewards every 1 SEGMENT but only **half of the rewards** will be paid to the holders to stimulate claiming only per CLUSTER as intended. To claim the rewards for every SEGMENT, users have to call the function “claimSegments” on the Smart contract interface.
 
 
 
